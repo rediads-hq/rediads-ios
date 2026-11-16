@@ -31,7 +31,7 @@ while the app runs. Leave it out only when the app already has Prebid Mobile (se
 product. In a `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/rediads-hq/rediads-ios.git", from: "0.1.0"),
+.package(url: "https://github.com/rediads-hq/rediads-ios.git", from: "0.1.1"),
 // and in your target's dependencies:
 .product(name: "RediadsDisplay", package: "rediads-ios"),
 ```
@@ -41,7 +41,7 @@ from the repository at the version's tag, so list every Rediads pod your product
 four always, plus the pair for GAM or AdMob if you use it.
 
 ```ruby
-rediads = 'https://raw.githubusercontent.com/rediads-hq/rediads-ios/0.1.0'
+rediads = 'https://raw.githubusercontent.com/rediads-hq/rediads-ios/0.1.1'
 pod 'RediadsEngine', :podspec => "#{rediads}/RediadsEngine.podspec"
 pod 'RediadsCore', :podspec => "#{rediads}/RediadsCore.podspec"
 pod 'RediadsDisplay', :podspec => "#{rediads}/RediadsDisplay.podspec"
