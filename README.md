@@ -31,27 +31,21 @@ while the app runs. Leave it out only when the app already has Prebid Mobile (se
 product. In a `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/rediads-hq/rediads-ios.git", from: "0.1.2"),
+.package(url: "https://github.com/rediads-hq/rediads-ios.git", from: "0.1.3"),
 // and in your target's dependencies:
 .product(name: "RediadsDisplay", package: "rediads-ios"),
 ```
 
-**CocoaPods.** The pods have the same names and imports as the products. Each pod's podspec comes
-from the repository at the version's tag, so list every Rediads pod your product needs: the first
-four always, plus the pair for GAM or AdMob if you use it.
+**CocoaPods.** The pods have the same names and imports as the products. They come from this
+repository's pod list: add it as a source next to CocoaPods' own, then the product's pod (it brings
+the Rediads pods it needs) and RediadsOM.
 
 ```ruby
-rediads = 'https://raw.githubusercontent.com/rediads-hq/rediads-ios/0.1.2'
-pod 'RediadsEngine', :podspec => "#{rediads}/RediadsEngine.podspec"
-pod 'RediadsCore', :podspec => "#{rediads}/RediadsCore.podspec"
-pod 'RediadsDisplay', :podspec => "#{rediads}/RediadsDisplay.podspec"
-pod 'RediadsOM', :podspec => "#{rediads}/RediadsOM.podspec"
-# Google Ad Manager (RediadsGAM): also these two
-pod 'RediadsGAMEventHandlers', :podspec => "#{rediads}/RediadsGAMEventHandlers.podspec"
-pod 'RediadsGAM', :podspec => "#{rediads}/RediadsGAM.podspec"
-# AdMob mediation (RediadsAdMob): also these two
-pod 'RediadsAdMobAdapters', :podspec => "#{rediads}/RediadsAdMobAdapters.podspec"
-pod 'RediadsAdMob', :podspec => "#{rediads}/RediadsAdMob.podspec"
+source 'https://github.com/rediads-hq/rediads-ios.git'
+source 'https://cdn.cocoapods.org/'
+
+pod 'RediadsDisplay', '0.1.3'   # or 'RediadsGAM' for Google Ad Manager, 'RediadsAdMob' for AdMob
+pod 'RediadsOM', '0.1.3'
 ```
 
 Google's pods declare iOS 12, which current Xcode rejects ("deployment target ... is set to 12.0").
