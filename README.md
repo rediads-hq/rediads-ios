@@ -31,7 +31,7 @@ while the app runs. Leave it out only when the app already has Prebid Mobile (se
 product. In a `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/rediads-hq/rediads-ios.git", from: "0.1.3"),
+.package(url: "https://github.com/rediads-hq/rediads-ios.git", from: "0.1.4"),
 // and in your target's dependencies:
 .product(name: "RediadsDisplay", package: "rediads-ios"),
 ```
@@ -44,8 +44,8 @@ the Rediads pods it needs) and RediadsOM.
 source 'https://github.com/rediads-hq/rediads-ios.git'
 source 'https://cdn.cocoapods.org/'
 
-pod 'RediadsDisplay', '0.1.3'   # or 'RediadsGAM' for Google Ad Manager, 'RediadsAdMob' for AdMob
-pod 'RediadsOM', '0.1.3'
+pod 'RediadsDisplay', '0.1.4'   # or 'RediadsGAM' for Google Ad Manager, 'RediadsAdMob' for AdMob
+pod 'RediadsOM', '0.1.4'
 ```
 
 Google's pods declare iOS 12, which current Xcode rejects ("deployment target ... is set to 12.0").
@@ -262,8 +262,9 @@ AdMob decides; Rediads is a custom event in the app's AdMob mediation group, and
 Rediads SDK renders the ad inside AdMob's banner or full-screen ad. You keep AdMob's objects:
 
 ```swift
-let banner = RediadsAdMobBanner(placement: "home_mrec", bannerView: adMobBanner)   // your AdMob BannerView
-banner.load()
+// Keep the Rediads object (a property): it runs the refreshes, each with a new bid.
+self.rediadsBanner = RediadsAdMobBanner(placement: "home_mrec", bannerView: adMobBanner)  // your AdMob BannerView
+rediadsBanner.load()
 
 let rewarded = RediadsAdMobRewarded(placement: "extra_life")
 rewarded.load(adMobAdUnitID: "ca-app-pub-XXXX/YYYY") { ad, error in self.adMobRewarded = ad }
@@ -300,9 +301,10 @@ Errors are `NSError`s in `RediadsError.domain` (`RediadsAds.errorDomain` in Obje
 - If you use a consent management platform (CMP), the SDK reads its standard IAB consent strings
   automatically.
 - **Apps for children:** set `RediadsAds.childDirected = true`. Ad requests are then marked as
-  directed to children (COPPA), and the Rediads server removes device IDs, the IP address, location
-  and user data before any bidder sees the request. In apps for mixed audiences, turn it on while
-  the user is known to be under 13. It applies from the next ad request.
+  directed to children (COPPA) and carry no device ID (no IDFA, no IDFV), and the Rediads server
+  removes the IP address, location and user data before any bidder sees the request. In apps for
+  mixed audiences, turn it on while the user is known to be under 13. It applies from the next ad
+  request.
 - **Privacy manifest:** the SDK ships one (`PrivacyInfo.xcprivacy`, in the `RediadsCore` bundle).
   Xcode merges it into your app's privacy report (*Product → Archive*, then *Generate Privacy
   Report* in the Organizer); use that report for your App Store privacy details. It declares:
