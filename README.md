@@ -31,7 +31,7 @@ while the app runs. Leave it out only when the app already has Prebid Mobile (se
 product. In a `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/rediads-hq/rediads-ios.git", from: "0.1.4"),
+.package(url: "https://github.com/rediads-hq/rediads-ios.git", from: "0.1.5"),
 // and in your target's dependencies:
 .product(name: "RediadsDisplay", package: "rediads-ios"),
 ```
@@ -44,8 +44,8 @@ the Rediads pods it needs) and RediadsOM.
 source 'https://github.com/rediads-hq/rediads-ios.git'
 source 'https://cdn.cocoapods.org/'
 
-pod 'RediadsDisplay', '0.1.4'   # or 'RediadsGAM' for Google Ad Manager, 'RediadsAdMob' for AdMob
-pod 'RediadsOM', '0.1.4'
+pod 'RediadsDisplay', '0.1.5'   # or 'RediadsGAM' for Google Ad Manager, 'RediadsAdMob' for AdMob
+pod 'RediadsOM', '0.1.5'
 ```
 
 Google's pods declare iOS 12, which current Xcode rejects ("deployment target ... is set to 12.0").
@@ -131,7 +131,7 @@ banner.load()
   position.
 - Sizes: `banner320x50`, `mediumRectangle300x250`, `leaderboard728x90`, or any `CGSize`.
 - The banner refreshes every `refreshInterval` seconds (15 to 120, default 60) while on screen.
-  Call `stopRefresh()` to stop.
+  `stopRefresh()` stops it; `load()` starts again.
 - Keep a strong reference to the banner (for example as a property, or through its superview).
 
 ## 5. Interstitial
